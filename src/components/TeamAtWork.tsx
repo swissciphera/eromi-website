@@ -7,15 +7,39 @@ import { Reveal } from "./ui/Reveal";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const photos = [
-  { src: "/service-1.png", alt: "Un artisan Eromi en plein chantier de rénovation" },
-  { src: "/service-2.png", alt: "Pose de carrelage par l'équipe Eromi" },
-  { src: "/service-3.png", alt: "Travaux de finition réalisés par Eromi" },
-  { src: "/service-4.png", alt: "Application de peinture par l'équipe Eromi" },
+  { src: "/service-1.png", alt: "Un artisan Eromi en plein chantier", rot: -13, ty: 38 },
+  { src: "/service-2.png", alt: "Pose de carrelage par l'équipe Eromi", rot: -5, ty: 4 },
+  { src: "/service-3.png", alt: "Travaux de finition réalisés par Eromi", rot: 5, ty: 4 },
+  { src: "/service-4.png", alt: "Application de peinture par l'équipe Eromi", rot: 13, ty: 38 },
 ];
+
+const zBase = ["z-10", "z-20", "z-20", "z-10"];
+
+function Card({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 1024px) 50vw, 260px"
+        className="object-cover"
+      />
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-ink/80 to-transparent px-3 pb-2.5 pt-8">
+        <span className="text-xs font-semibold tracking-wide text-paper">
+          EROMI
+        </span>
+        <span className="text-[0.65rem] font-medium text-paper/70">
+          Sur le chantier
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function TeamAtWork() {
   return (
-    <section className="bg-ivory py-28 sm:py-40">
+    <section className="overflow-hidden bg-ivory py-28 sm:py-40">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         {/* Header */}
         <div className="grid gap-y-6 gap-x-10 lg:grid-cols-12 lg:items-end">
@@ -39,35 +63,36 @@ export function TeamAtWork() {
           </Reveal>
         </div>
 
-        {/* Staggered gallery */}
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 sm:gap-6">
-          {photos.map((photo, i) => (
-            <motion.figure
-              key={photo.src}
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.9, delay: (i % 2) * 0.12, ease }}
-              className={`group relative overflow-hidden rounded-[1.75rem] shadow-soft ${
-                i % 2 === 1 ? "sm:mt-14" : ""
-              }`}
+        {/* Fanned card showcase (lg+) */}
+        <div className="mt-24 hidden items-end justify-center lg:flex">
+          {photos.map((p, i) => (
+            <motion.div
+              key={p.src}
+              initial={{ opacity: 0, rotate: 0, y: 90 }}
+              whileInView={{ opacity: 1, rotate: p.rot, y: p.ty }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.9, delay: i * 0.1, ease }}
+              whileHover={{ rotate: 0, y: p.ty - 30, scale: 1.05 }}
+              className={`relative -ml-16 w-[16rem] shrink-0 cursor-pointer rounded-[1.4rem] bg-paper p-2.5 shadow-[0_30px_60px_-20px_rgba(19,31,51,0.5)] first:ml-0 hover:z-50 ${zBase[i]}`}
             >
-              <div className="relative aspect-[3/2]">
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 620px"
-                  className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              </div>
+              <Card src={p.src} alt={p.alt} />
+            </motion.div>
+          ))}
+        </div>
 
-              {/* Corner index */}
-              <span className="absolute left-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-paper/85 text-sm font-semibold text-ink backdrop-blur-sm transition-all duration-500 group-hover:bg-blue group-hover:text-white">
-                0{i + 1}
-              </span>
-            </motion.figure>
+        {/* Mobile / tablet fallback grid */}
+        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:hidden">
+          {photos.map((p, i) => (
+            <motion.div
+              key={p.src}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.8, delay: (i % 2) * 0.1, ease }}
+              className="rounded-[1.4rem] bg-paper p-2 shadow-soft"
+            >
+              <Card src={p.src} alt={p.alt} />
+            </motion.div>
           ))}
         </div>
       </div>
