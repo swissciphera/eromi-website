@@ -11,8 +11,8 @@ export function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col justify-end overflow-hidden bg-ink">
       <Image
-        src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2400&q=80"
-        alt="Intérieur rénové haut de gamme à Genève"
+        src="/hero-image-1.png"
+        alt="Réalisation architecturale haut de gamme par Eromi"
         fill
         priority
         className="object-cover"

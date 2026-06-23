@@ -15,7 +15,7 @@ type CtaBandProps = {
 export function CtaBand({
   title = "Donnons vie à votre vision.",
   text = "Une rénovation complète ou un simple conseil, notre équipe vous accompagne et établit votre devis gratuitement.",
-  image = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80",
+  image = "/cta-image-1.png",
 }: CtaBandProps) {
   return (
     <section className="bg-paper px-6 pb-28 pt-4 sm:px-8 sm:pb-40">
