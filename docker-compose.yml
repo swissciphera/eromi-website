@@ -1,0 +1,43 @@
+# Docker Compose for Dokploy.
+# Dokploy ships its own Traefik reverse proxy, attached to the external
+# "dokploy-network". Traefik reads the labels below to route traffic and
+# issue Let's Encrypt certificates automatically — no ports are published.
+#
+# Set DOMAIN in the Dokploy "Environment" tab (defaults to eromi.ch).
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    networks:
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+
+      # --- HTTPS router ---
+      - traefik.http.routers.eromi.rule=Host(`${DOMAIN:-eromi.ch}`) || Host(`www.${DOMAIN:-eromi.ch}`)
+      - traefik.http.routers.eromi.entrypoints=websecure
+      - traefik.http.routers.eromi.tls=true
+      - traefik.http.routers.eromi.tls.certresolver=letsencrypt
+
+      # --- HTTP router (redirects to HTTPS) ---
+      - traefik.http.routers.eromi-web.rule=Host(`${DOMAIN:-eromi.ch}`) || Host(`www.${DOMAIN:-eromi.ch}`)
+      - traefik.http.routers.eromi-web.entrypoints=web
+      - traefik.http.routers.eromi-web.middlewares=eromi-https-redirect
+
+      # --- Middlewares ---
+      - traefik.http.middlewares.eromi-https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.eromi-https-redirect.redirectscheme.permanent=true
+
+      # --- Service (internal container port) ---
+      - traefik.http.services.eromi.loadbalancer.server.port=3000
+
+networks:
+  dokploy-network:
+    external: true
