@@ -39,7 +39,7 @@ export function Values() {
                 variants={staggerItem}
                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-paper p-8 transition-colors duration-300 hover:border-blue/40"
               >
-                <span className="pointer-events-none absolute -right-2 -top-4 font-display text-7xl font-medium text-blue/[0.06]">
+                <span className="pointer-events-none absolute right-6 top-5 font-display text-6xl font-medium leading-none text-blue/[0.08]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="grid h-14 w-14 place-items-center rounded-2xl bg-blue/10 text-blue transition-colors duration-300 group-hover:bg-blue group-hover:text-white">
