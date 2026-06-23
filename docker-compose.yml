@@ -1,9 +1,22 @@
 # Docker Compose for Dokploy.
-# Dokploy ships its own Traefik reverse proxy, attached to the external
-# "dokploy-network". Traefik reads the labels below to route traffic and
-# issue Let's Encrypt certificates automatically — no ports are published.
 #
-# Set DOMAIN in the Dokploy "Environment" tab (defaults to eromi.ch).
+# Routing, HTTPS and the Let's Encrypt certificate are managed entirely from
+# the Dokploy "Domains" tab (domain: web.eromi.ciphera.ch, service: web,
+# port 3000, HTTPS, certresolver: letsencrypt). Dokploy injects the required
+# Traefik labels at deploy time, so we intentionally do NOT define any Traefik
+# labels here — doing so would create a second, conflicting router and trigger
+# failed Let's Encrypt challenges.
+#
+# Cloudflare setup (to force HTTPS and avoid redirect loops / cert errors):
+#   1. SSL/TLS mode: "Full (strict)"  -> Cloudflare talks HTTPS to the origin.
+#      Never use "Flexible": it causes an infinite redirect loop.
+#   2. "Always Use HTTPS": ON          -> Cloudflare upgrades every visitor to
+#      HTTPS, so the site only ever serves over HTTPS.
+#   3. First certificate issuance: temporarily set the DNS record to
+#      "DNS only" (grey cloud) so Let's Encrypt can validate over HTTP-01,
+#      then switch the proxy back on (orange cloud).
+#   (In Dokploy: keep the domain on HTTPS; enabling "Redirect to HTTPS" there
+#    is optional once Cloudflare "Always Use HTTPS" is on.)
 
 services:
   web:
@@ -16,27 +29,6 @@ services:
       - NEXT_TELEMETRY_DISABLED=1
     networks:
       - dokploy-network
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=dokploy-network
-
-      # --- HTTPS router ---
-      - traefik.http.routers.eromi.rule=Host(`${DOMAIN:-eromi.ch}`) || Host(`www.${DOMAIN:-eromi.ch}`)
-      - traefik.http.routers.eromi.entrypoints=websecure
-      - traefik.http.routers.eromi.tls=true
-      - traefik.http.routers.eromi.tls.certresolver=letsencrypt
-
-      # --- HTTP router (redirects to HTTPS) ---
-      - traefik.http.routers.eromi-web.rule=Host(`${DOMAIN:-eromi.ch}`) || Host(`www.${DOMAIN:-eromi.ch}`)
-      - traefik.http.routers.eromi-web.entrypoints=web
-      - traefik.http.routers.eromi-web.middlewares=eromi-https-redirect
-
-      # --- Middlewares ---
-      - traefik.http.middlewares.eromi-https-redirect.redirectscheme.scheme=https
-      - traefik.http.middlewares.eromi-https-redirect.redirectscheme.permanent=true
-
-      # --- Service (internal container port) ---
-      - traefik.http.services.eromi.loadbalancer.server.port=3000
 
 networks:
   dokploy-network:
