@@ -2,6 +2,7 @@ import { Hero } from "@/components/Hero";
 import { Intro } from "@/components/Intro";
 import { Services } from "@/components/Services";
 import { SelectedWork } from "@/components/SelectedWork";
+import { TeamAtWork } from "@/components/TeamAtWork";
 import { CtaBand } from "@/components/CtaBand";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <Intro />
       <Services />
       <SelectedWork />
+      <TeamAtWork />
       <CtaBand />
     </>
   );
