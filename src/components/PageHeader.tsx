@@ -1,8 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -21,16 +22,34 @@ export function PageHeader({
   image,
   crumb,
 }: PageHeaderProps) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
-    <section className="relative flex min-h-[58vh] items-end overflow-hidden bg-ink pb-16 pt-40 sm:min-h-[64vh] sm:pb-20">
+    <section
+      ref={ref}
+      className="relative flex min-h-[58vh] items-end overflow-hidden bg-ink pb-16 pt-40 sm:min-h-[64vh] sm:pb-20"
+    >
       {image && (
         <>
-          <Image src={image} alt="" fill priority className="object-cover opacity-40" />
+          <motion.div style={{ y: imgY, scale: imgScale }} className="absolute inset-0">
+            <Image src={image} alt="" fill priority className="object-cover opacity-40" />
+          </motion.div>
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/50" />
         </>
       )}
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8">
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8"
+      >
         <motion.nav
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -72,7 +91,7 @@ export function PageHeader({
             {subtitle}
           </motion.p>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }
