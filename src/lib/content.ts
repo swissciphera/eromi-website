@@ -127,7 +127,7 @@ export const projects: Project[] = [
     title: "Rénovation de Villas",
     text: "Rénovation complète de quatre villas, soit près de 600 m² transformés. Plus de 25 références de carrelages posées avec soin, chaque détail maîtrisé.",
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80",
+      "/portfolio-1/image-1.png",
     size: "tall",
   },
   {
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     title: "Rénovation de Cuisine",
     text: "Cuisine personnalisée en FENIX noir et chêne massif, îlot sur mesure et plan de travail DEKTON pour une atmosphère unique.",
     image:
-      "https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&w=1400&q=80",
+      "/portfolio-2/image-1.png",
     size: "normal",
   },
   {
@@ -143,7 +143,7 @@ export const projects: Project[] = [
     title: "Rénovation Sur Mesure",
     text: "Réaménagement d'un appartement pour agrandir le séjour et créer une chambre d'amis. Le parquet d'origine a été conservé et restauré.",
     image:
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1400&q=80",
+      "/portfolio-3/image-1.png",
     size: "normal",
   },
   {
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     title: "Rénovation d'Agence",
     text: "Agence de 170 m² entièrement repensée pour un espace moderne et fonctionnel : zones de travail, de détente et d'accueil.",
     image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80",
+      "/portfolio-4/image-1.png",
     size: "wide",
   },
   {
@@ -159,7 +159,7 @@ export const projects: Project[] = [
     title: "Rénovation Complète",
     text: "Appartement rénové avec des matériaux de qualité : sol en parquet, murs en béton ciré et menuiseries sur mesure pour une atmosphère élégante et moderne.",
     image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=80",
+      "/portfolio-5/image-1.png",
     size: "tall",
   },
 ];
