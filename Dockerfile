@@ -9,7 +9,10 @@ RUN apk add --no-cache libc6-compat
 FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# `npm ci` is preferred for reproducibility, but the lock file can miss
+# platform-specific optional deps (e.g. sharp's Linux binaries) when it was
+# generated on another OS. Fall back to `npm install` so the build is robust.
+RUN npm ci --no-audit --no-fund || npm install --no-audit --no-fund
 
 # ---- Builder ----
 FROM base AS builder
