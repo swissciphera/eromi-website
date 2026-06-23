@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { Star } from "lucide-react";
 import { Reveal } from "./ui/Reveal";
-import { testimonials, company } from "@/lib/content";
+import { testimonials } from "@/lib/content";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -22,7 +22,7 @@ export function Testimonials() {
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="mt-6 max-w-xl font-display text-4xl font-medium leading-[1.1] tracking-tight text-ink sm:text-5xl">
-                La confiance de plus de 1000 clients.
+                La confiance de nos clients.
               </h2>
             </Reveal>
           </div>
@@ -34,7 +34,7 @@ export function Testimonials() {
                 ))}
               </span>
               <span className="text-sm font-medium text-mute">
-                {company.reviews.rating}/5 · {company.reviews.count} avis Google
+                Avis Google vérifiés
               </span>
             </div>
           </Reveal>
