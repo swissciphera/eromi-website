@@ -47,7 +47,10 @@ export function HistoryStory() {
                   className="object-cover"
                 />
               </motion.div>
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-ink/20" />
+              <span className="absolute left-5 top-5 rounded-full bg-paper/90 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-ink backdrop-blur-sm">
+                Depuis 1987
+              </span>
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-light">
                   Les fondateurs

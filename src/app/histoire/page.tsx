@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { HistoryStory } from "@/components/HistoryStory";
+import { Values } from "@/components/Values";
 import { Leadership } from "@/components/Leadership";
 import { CtaBand } from "@/components/CtaBand";
 
@@ -21,6 +22,7 @@ export default function HistoirePage() {
         image="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=80"
       />
       <HistoryStory />
+      <Values />
       <Leadership />
       <CtaBand
         title="Perpétuons cette exigence chez vous."

@@ -104,6 +104,21 @@ export const story = {
     "Pendant plus de trois décennies, les frères Miranda façonnent l'identité de l'entreprise. Le savoir-faire artisanal se transmet, les équipes grandissent, mais l'exigence reste la même : ne livrer que ce dont on serait fier chez soi. C'est cet héritage, fait de rigueur et de fierté du métier, qui continue d'animer EROMI aujourd'hui.",
 };
 
+export const values = [
+  {
+    title: "Le savoir-faire avant tout",
+    text: "Un métier d'artisan transmis depuis 1987, où chaque geste compte et chaque finition se mérite.",
+  },
+  {
+    title: "L'exigence, sans compromis",
+    text: "Des matériaux choisis, des plannings respectés et un seul standard : ne livrer que ce dont nous serions fiers chez nous.",
+  },
+  {
+    title: "La confiance qui dure",
+    text: "Nous ne bâtissons pas seulement des murs, mais des relations sur le long terme, fondées sur la parole donnée.",
+  },
+];
+
 export const director = {
   name: "Micael Teixeira de Miranda",
   role: "Directeur",
