@@ -27,6 +27,8 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
+      # Set to "true" to display the maintenance page to all visitors.
+      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-false}
     networks:
       - dokploy-network
 
